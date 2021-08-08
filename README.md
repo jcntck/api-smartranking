@@ -10,15 +10,16 @@ Necessidade de desenvolver um sistema que automatize o processo de gerenciamento
 - TypeScript
 - JavaScript
 - NestJs
-*Armazenamento feito em memoria apenas temporariamente*
+- Mongoose
 
+**Armazenamento:**
+- MongoDB
 
 ## Entidades
 
 ### - Jogador
 ```TypeScript
 interface Jogador {
-	readonly _id:  string;
 	readonly telefoneCelular:  string;
 	readonly email:  string;
 	nome:  string;
@@ -39,9 +40,9 @@ Cadastra ou atualiza um registro existente pelo e-mail
 	"nome": "Nome do Jogador"
 }
 ```
-##
+
 ### GET /api/v1/jogadores
 Consulta todos os jogadores ou apenas um jogador se passado o e-mail como parâmetro via *query string*.
-##
+
 ### DELETE /api/v1/jogadores
 Deleta um jogador pelo e-mail passado como parâmetro via *query string*
