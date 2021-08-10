@@ -1,6 +1,6 @@
 
 # API SmartRanking
-API desenvolvida em NestJS no curso de Node.js Microservices da Udemy ([Link do curso aqui](https://www.udemy.com/course/construindo-um-backend-escalavel-com-nestjs-aws-e-pivotalws/).
+API desenvolvida em NestJS no curso de Node.js Microservices da Udemy ([Link do curso aqui](https://www.udemy.com/course/construindo-um-backend-escalavel-com-nestjs-aws-e-pivotalws/)).
 
 ## Problemática
 Necessidade de desenvolver um sistema que automatize o processo de gerenciamento de partidas e classificação de rankings.
