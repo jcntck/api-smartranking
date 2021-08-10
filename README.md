@@ -1,9 +1,8 @@
-# API SmartRanking
 
-API desenvolvida em NestJS no curso de Node.js Microservices da Udemy ([Link do curso aqui](https://www.udemy.com/course/construindo-um-backend-escalavel-com-nestjs-aws-e-pivotalws/)).
+# API SmartRanking
+API desenvolvida em NestJS no curso de Node.js Microservices da Udemy ([Link do curso aqui](https://www.udemy.com/course/construindo-um-backend-escalavel-com-nestjs-aws-e-pivotalws/).
 
 ## Problemática
-
 Necessidade de desenvolver um sistema que automatize o processo de gerenciamento de partidas e classificação de rankings.
 
 ## Tecnologias
@@ -15,34 +14,40 @@ Necessidade de desenvolver um sistema que automatize o processo de gerenciamento
 **Armazenamento:**
 - MongoDB
 
-## Entidades
+## Jogador
 
-### - Jogador
-```TypeScript
-interface Jogador {
-	readonly telefoneCelular:  string;
-	readonly email:  string;
-	nome:  string;
-	ranking:  string;
-	posicaoRanking:  number;
-	urlFotoJogador:  string;
-}
-```
+#### POST
+#### /api/v1/jogadores
+Cadastra um novo jogador
 
-## Endpoints
-
-### POST /api/v1/jogadores
-Cadastra ou atualiza um registro existente pelo e-mail
+**Exemplo:**
 ```JSON
 {
-	"telefoneCelular": "+55999999999",
-	"email": "email.jogador@dominio.com",
-	"nome": "Nome do Jogador"
+	"telefoneCelular": "+5500000000000",
+	"email": "email_do_jogador@dominio.com",
+	"nome": "Nome do jogador"
 }
 ```
 
-### GET /api/v1/jogadores
-Consulta todos os jogadores ou apenas um jogador se passado o e-mail como parâmetro via *query string*.
+#### PUT
+#### /api/v1/jogadores/:_id
+Atualiza um jogador existente referenciado pelo `_id`
 
-### DELETE /api/v1/jogadores
-Deleta um jogador pelo e-mail passado como parâmetro via *query string*
+**Exemplo:**
+```JSON
+{
+	"telefoneCelular": "+5500000000000",
+	"nome": "Nome do jogador"
+}
+```
+#### DELETE
+#### /api/v1/jogadores/:_id
+Remove um jogador existente referenciado pelo `_id`
+
+#### GET 
+#### /api/v1/jogadores
+Retorna um array com todos os jogadores cadastrados
+
+#### GET 
+#### /api/v1/jogadores/:_id
+Retorna um jogador com o `_id` passado por parâmetro  
