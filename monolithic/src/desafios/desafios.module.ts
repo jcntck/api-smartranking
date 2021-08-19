@@ -9,12 +9,12 @@ import { PartidaSchema } from './interfaces/partida.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: "Desafio", schema: DesafioSchema }]),
-    MongooseModule.forFeature([{ name: "Partida", schema: PartidaSchema }]),
+    MongooseModule.forFeature([{ name: 'Desafio', schema: DesafioSchema }]),
+    MongooseModule.forFeature([{ name: 'Partida', schema: PartidaSchema }]),
     JogadoresModule,
-    CategoriasModule
+    CategoriasModule,
   ],
   controllers: [DesafiosController],
-  providers: [DesafiosService]
+  providers: [DesafiosService],
 })
 export class DesafiosModule {}
