@@ -5,7 +5,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     private readonly logger = new Logger(AllExceptionsFilter.name);
 
-    catch(exception: unknown, host: ArgumentsHost) {
+    catch(exception: any, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
