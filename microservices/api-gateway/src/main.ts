@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './filters/http-exception.filter';
+import { AllExceptionsFilter } from './commons/filters/http-exception.filter';
 import * as momentTimezone from 'moment-timezone';
-import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
+import { TimeoutInterceptor } from './commons/interceptors/timeout.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

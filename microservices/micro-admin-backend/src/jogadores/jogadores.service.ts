@@ -2,57 +2,55 @@ import { Injectable, Logger } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Categoria } from './interfaces/categorias/categoria.interface';
-import { Jogador } from './interfaces/jogadores/jogador.interface';
+import { Jogador } from 'src/interfaces/jogadores/jogador.interface';
 
 @Injectable()
-export class AppService {
-  private readonly logger = new Logger(AppService.name);
+export class JogadoresService {
+  private readonly logger = new Logger(JogadoresService.name);
 
   constructor(
-    @InjectModel('Categoria') private readonly categoriaModel: Model<Categoria>,
     @InjectModel('Jogador') private readonly jogadorModel: Model<Jogador>,
   ) {}
 
-  async criarCategoria(categoria: Categoria): Promise<Categoria> {
+  async criarJogador(jogador: Jogador): Promise<Jogador> {
     try {
-      return await this.categoriaModel.create(categoria);
+      return await this.jogadorModel.create(jogador);
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
     }
   }
 
-  async consultarTodasCategorias(): Promise<Categoria[]> {
+  async consultarTodosJogadores(): Promise<Jogador[]> {
     try {
-      return await this.categoriaModel.find();
+      return await this.jogadorModel.find();
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
     }
   }
 
-  async consultarCategoriaPeloId(categoria: string): Promise<Categoria> {
+  async consultarJogadorPeloId(_id: string): Promise<Jogador> {
     try {
-      return await this.categoriaModel.findOne({ categoria });
+      return await this.jogadorModel.findOne({ _id });
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
     }
   }
 
-  async atualizarCategoria(_id: string, categoria: Categoria): Promise<void> {
+  async atualizarJogador(_id: string, jogador: Jogador): Promise<void> {
     try {
-      await this.categoriaModel.findOneAndUpdate({ _id }, { $set: categoria });
+      await this.jogadorModel.findOneAndUpdate({ _id }, { $set: jogador });
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
     }
   }
 
-  async deletarCategoria(_id: string): Promise<void> {
+  async deletarJogador(_id: string): Promise<void> {
     try {
-      await this.categoriaModel.findOneAndDelete({ _id });
+      await this.jogadorModel.findOneAndDelete({ _id });
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
