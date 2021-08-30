@@ -40,4 +40,22 @@ export class AppService {
       throw new RpcException(error.message);
     }
   }
+
+  async atualizarCategoria(_id: string, categoria: Categoria): Promise<void> {
+    try {
+      await this.categoriaModel.findOneAndUpdate({ _id }, { $set: categoria });
+    } catch (error) {
+      this.logger.error(`error: ${JSON.stringify(error.message)}`);
+      throw new RpcException(error.message);
+    }
+  }
+
+  async deletarCategoria(_id: string): Promise<void> {
+    try {
+      await this.categoriaModel.findOneAndDelete({ _id });
+    } catch (error) {
+      this.logger.error(`error: ${JSON.stringify(error.message)}`);
+      throw new RpcException(error.message);
+    }
+  }
 }
