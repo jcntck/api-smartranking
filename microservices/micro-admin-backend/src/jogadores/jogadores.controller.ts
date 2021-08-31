@@ -6,7 +6,7 @@ import {
   Payload,
   RmqContext,
 } from '@nestjs/microservices';
-import { Jogador } from 'src/interfaces/jogadores/jogador.interface';
+import { Jogador } from './interfaces/jogador.interface';
 import { JogadoresService } from './jogadores.service';
 
 const ackErrors: string[] = ['E11000'];

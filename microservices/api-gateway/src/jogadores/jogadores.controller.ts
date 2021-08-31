@@ -4,25 +4,32 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
   Query,
+  UploadedFile,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { firstValueFrom, Observable, take } from 'rxjs';
+import { AwsService } from 'src/aws/aws.service';
 import { ClientProxySmartRanking } from 'src/proxyrmq/client-proxy-smartranking.service';
 import { AtualizarJogadorDto } from './dtos/atualizar-jogador.dto';
 import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 
 @Controller('api/v1/jogadores')
 export class JogadoresController {
+  private logger = new Logger(JogadoresController.name);
   private clientProxy: ClientProxy;
 
   constructor(
     private readonly clientProxySmartRanking: ClientProxySmartRanking,
+    private readonly awsService: AwsService,
   ) {
     this.clientProxy =
       this.clientProxySmartRanking.getClientProxyAdminBackendInstance();
@@ -41,6 +48,32 @@ export class JogadoresController {
     }
 
     await this.clientProxy.emit('criar-jogador', criarJogadorDto);
+  }
+
+  @Post('/:_id/upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadArquivo(@UploadedFile() file, @Param('_id') _id: string) {
+    const jogador$ = await this.clientProxy
+      .send('consultar-jogadores', _id)
+      .pipe(take(1));
+    const jogador = await firstValueFrom(jogador$);
+
+    if (!jogador) {
+      throw new BadRequestException('Jogador não cadastrado!');
+    }
+
+    this.awsService.uploadArquivo(file, _id).then(async (data) => {
+      const atualizarJogadorDto: AtualizarJogadorDto = {
+        urlFotoJogador: data.url,
+      };
+
+      await this.clientProxy.emit('atualizar-jogador', {
+        id: _id,
+        jogador: atualizarJogadorDto,
+      });
+    });
+
+    return this.clientProxy.send('consultar-jogadores', _id);
   }
 
   @Get()
